@@ -16,6 +16,7 @@ model Artist {
   image       String?
   bio         String?
   recordLabel String?
+  createdAt DateTime @default(now())
 }
 
 model Album {

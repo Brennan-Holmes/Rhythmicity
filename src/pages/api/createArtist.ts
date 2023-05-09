@@ -7,12 +7,13 @@ export default async function createArtist(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { name, image, recordLabel } = req.body;
+  const { name, image, bio, recordLabel } = req.body;
 
   const newArtist = await prisma.artist.create({
     data: {
       name,
       image,
+      bio,
       recordLabel,
     },
   });
