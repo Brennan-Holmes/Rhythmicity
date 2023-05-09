@@ -4,9 +4,11 @@ import Head from "next/head";
 import { SignedOut, SignedIn, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import CreateArtistModal from "@/components/CreateArtistModal";
+import { CircularProgress } from "@chakra-ui/react";
 
 interface Artist {
   id: number;
+  image: string;
   name: string;
   bio: string;
 }
@@ -67,32 +69,13 @@ export default function Home() {
 
       <header className="bg-slate-800 text-white py-3 px-4 relative">
         <div className="absolute bottom-0 left-0 mb-3 ml-3">
-          <form onSubmit={handleCreateArtist}>
-            <div className="flex space-x-2">
-              <input
-                type="text"
-                value={newArtistName}
-                onChange={(e) => setNewArtistName(e.target.value)}
-                className="border-2 border-gray-300 text-white bg-slate-800 p-2 rounded-md flex-grow"
-                placeholder="Enter artist name"
-                required
-              />
-              <input
-                type="text"
-                value={newArtistImage}
-                onChange={(e) => setNewArtistImage(e.target.value)}
-                className="border-2 border-gray-300 text-white bg-slate-800 p-2 rounded-md"
-                placeholder="Enter artist Image"
-                required
-              />
-              <button
-                type="submit"
-                className="bg-blue-800 rounded-md px-2 py-2 text-white hover:bg-blue-900 hover:duration-300 hover:transition-all hover:scale-105"
-              >
-                Create Artist
-              </button>
-            </div>
-          </form>
+          {/* <CreateArtistForm
+            onClose={handleCloseCreateArtistForm}
+            onSubmit={function (name: string, image: string): void {
+              throw new Error("Function not implemented.");
+            }}
+          /> */}
+          <CreateArtistModal />
         </div>
         <div className="container mx-auto">
           <div className="flex justify-between items-center">
@@ -138,7 +121,7 @@ export default function Home() {
             {[1, 2, 3, 4].map((item) => (
               <div
                 key={item}
-                className="bg-white p-2 rounded shadow hover:transition-all hover:duration-300 hover:scale-105"
+                className="bg-slate-800 p-2 rounded shadow hover:transition-all hover:duration-300 hover:scale-105"
               >
                 <Image
                   src="/austin-neill-hgO1wFPXl3I-unsplash.jpg"
@@ -147,8 +130,8 @@ export default function Home() {
                   height={400}
                   priority
                 />
-                <h3 className="text-xl mt-4 text-black">Track Title {item}</h3>
-                <p className="text-sm text-black">Artist Name {item}</p>
+                <h3 className="text-xl mt-4 text-white">Track Title {item}</h3>
+                <p className="text-sm text-white">Artist Name {item}</p>
               </div>
             ))}
 
@@ -158,11 +141,17 @@ export default function Home() {
               </h2>
               {featuredArtist ? (
                 <div className="bg-white p-4 rounded shadow">
+                  <Image
+                    src={featuredArtist.image}
+                    alt={featuredArtist.name}
+                    width={500}
+                    height={500}
+                  />
                   <h3 className="text-xl text-black">{featuredArtist.name}</h3>
                   <p className="text-sm text-black">{featuredArtist.bio}</p>
                 </div>
               ) : (
-                <p>Loading...</p>
+                <CircularProgress value={80} />
               )}
             </section>
           </div>

@@ -1,58 +1,99 @@
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
+  useDisclosure,
+  FormControl,
+  FormLabel,
+  Input,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
-// import { createArtist } from "@/lib/api";
-// import { Modal } from "@/components/Modal";
+import axios from "axios";
 
-interface Props {
-  show: boolean;
-  onClose: () => void;
-}
+export default function CreateArtistModal() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [artistName, setArtistName] = useState("");
+  const [artistImage, setArtistImage] = useState("");
+  const [artistBio, setArtistBio] = useState("");
+  const [artistRecordLabel, setArtistRecordLabel] = useState("");
+  const initialRef = React.useRef(null);
 
-export default function CreateArtistModal({ show, onClose }: Props) {
-  const [name, setName] = useState("");
+  const handleSubmit = async () => {
+    try {
+      const res = await axios.post("/api/createArtist", {
+        name: artistName,
+        image: artistImage,
+        bio: artistBio,
+        recordLabel: artistRecordLabel,
+      });
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const artist = await createArtist(name);
-    console.log(artist);
-    onClose();
+      console.log("Created new artist:", res.data);
+      onClose();
+    } catch (error) {
+      console.error("Error creating artist:", error);
+    }
   };
 
   return (
-    <Modal show={show} onClose={onClose}>
-      <h3 className="text-xl font-bold mb-4">Create Artist</h3>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 font-bold mb-2"
-            htmlFor="artistName"
-          >
-            Artist Name
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="artistName"
-            type="text"
-            placeholder="Enter artist name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        <div className="flex justify-end">
-          <button
-            type="button"
-            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
-            onClick={onClose}
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r"
-          >
-            Create
-          </button>
-        </div>
-      </form>
-    </Modal>
+    <>
+      <Button
+        className="bg-blue-800 rounded-md px-5 py-5 hover:bg-blue-700 hover:transition-all hover:duration-300 hover:scale-105 text-black"
+        onClick={onOpen}
+      >
+        Create Artist
+      </Button>
+
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Artist Information</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl>
+              <FormLabel>Artist Name</FormLabel>
+              <Input
+                ref={initialRef}
+                placeholder="Artist name"
+                onChange={(e) => setArtistName(e.target.value)}
+              />
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>Artist Image</FormLabel>
+              <Input
+                placeholder="Artist Image"
+                onChange={(e) => setArtistImage(e.target.value)}
+              />
+            </FormControl>
+            <FormControl mt={4}>
+              <FormLabel>Artist Bio</FormLabel>
+              <Input
+                placeholder="Artist Bio"
+                onChange={(e) => setArtistBio(e.target.value)}
+              />
+            </FormControl>
+            <FormControl mt={4}>
+              <FormLabel>Artist Record Label</FormLabel>
+              <Input
+                placeholder="Artist Record Label"
+                onChange={(e) => setArtistRecordLabel(e.target.value)}
+              />
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+              Submit
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 }
