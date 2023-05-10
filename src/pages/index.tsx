@@ -72,7 +72,7 @@ export default function Home() {
   return (
     <div className="flex flex-col bg-gray-100 min-h-screen">
       <Head>
-        <title>SoundSphere | Home</title>
+        <title>Rhythmicity | Home</title>
       </Head>
 
       <header className="bg-slate-800 text-white py-3 px-4 sm:px-6 lg:px-8 relative">
@@ -85,7 +85,7 @@ export default function Home() {
         <div className="container mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between">
             <h1 className="text-2xl sm:text-3xl lg:text-4xl mb-2 sm:mb-0">
-              SOUNDSPHERE
+              Rhythmicity
             </h1>
             <BoxForm />
             <div className="flex space-x-2">
@@ -115,7 +115,7 @@ export default function Home() {
         <section className="text-center mb-12">
           <h2 className="text-4xl mb-6 text-black font-bold">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
-              Welcome to SoundSphere!
+              Welcome to Rhythmicity!
             </span>
           </h2>
           {showAlert ? (
