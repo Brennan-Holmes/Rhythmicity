@@ -17,11 +17,7 @@ import BoxForm from "@/components/BoxForm";
 
 export default function Home() {
   const [featuredArtist, setFeaturedArtist] = useState<Artist | null>(null);
-  // const [showCreateArtistForm, setShowCreateArtistForm] = useState(false);
-  // const [newArtistName, setNewArtistName] = useState("");
-  // const [newArtistImage, setNewArtistImage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
-  // Add a state variable to store the search query
   const [searchQuery, setSearchQuery] = useState("");
 
   const router = useRouter();
