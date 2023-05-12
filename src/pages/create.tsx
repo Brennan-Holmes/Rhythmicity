@@ -1,4 +1,3 @@
-// src/pages/create.tsx
 import { useState } from "react";
 import Head from "next/head";
 
@@ -20,7 +19,6 @@ export default function Create() {
     });
 
     if (response.ok) {
-      // Reset the form fields
       setArtist("");
       setTrack("");
     }
@@ -29,7 +27,7 @@ export default function Create() {
   return (
     <div className="bg-gray-100 min-h-screen">
       <Head>
-        <title>Create New Artist - SoundSphere</title>
+        <title>Create New Artist - Rhythmicity</title>
       </Head>
 
       <main className="p-8">
