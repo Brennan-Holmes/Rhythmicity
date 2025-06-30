@@ -1,4 +1,3 @@
-// src/pages/create.tsx
 import { useState } from "react";
 import Head from "next/head";
 
@@ -10,7 +9,6 @@ export default function Create() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Replace the URL below with your API endpoint
     const response = await fetch("/api/create", {
       method: "POST",
       headers: {
